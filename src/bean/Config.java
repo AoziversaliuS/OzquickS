@@ -13,8 +13,10 @@ public class Config {
 	private int rowHeight = 50;
 	private int rowMargin = 10;
 	private int softWare_Width = 300;
-	private int softWare_Height = 700;
-	private int softWare_HeightOffset = 40;
+	private int softWare_Height = 720;
+	private int softWare_HeightOffset = 31;
+	public  int screenX = 500;
+	public  int screenY = 100;
 	
 	
 	
@@ -53,9 +55,17 @@ public class Config {
 	}
 
 
+	
+
+
+
+
+
 
 	public Config(Color fg, Color bg, Color sfg, Color sbg, Font font,
-			int rowHeight, int rowMargin) {
+			int rowHeight, int rowMargin, int softWare_Width,
+			int softWare_Height, int softWare_HeightOffset, int screenX,
+			int screenY) {
 		super();
 		this.fg = fg;
 		this.bg = bg;
@@ -64,6 +74,35 @@ public class Config {
 		this.font = font;
 		this.rowHeight = rowHeight;
 		this.rowMargin = rowMargin;
+		this.softWare_Width = softWare_Width;
+		this.softWare_Height = softWare_Height;
+		this.softWare_HeightOffset = softWare_HeightOffset;
+		this.screenX = screenX;
+		this.screenY = screenY;
+	}
+
+
+
+	public int getScreenX() {
+		return screenX;
+	}
+
+
+
+	public void setScreenX(int screenX) {
+		this.screenX = screenX;
+	}
+
+
+
+	public int getScreenY() {
+		return screenY;
+	}
+
+
+
+	public void setScreenY(int screenY) {
+		this.screenY = screenY;
 	}
 
 

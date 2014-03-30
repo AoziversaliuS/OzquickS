@@ -14,7 +14,7 @@ public class OTM extends AbstractTableModel{
 	private static ArrayList<String> rowValue;
 	
 	public static final int COLUMN_COUNT = 1;      //总共有多少行
-	public static final int MAX_ROW_ON_SCREEN = 11;//屏幕上能显示的最大行数
+	public static final int MAX_ROW_ON_SCREEN = 13;//屏幕上能显示的最大行数
 	
 	public OTM(){
 		rowValue = new ArrayList<String>();
@@ -25,7 +25,6 @@ public class OTM extends AbstractTableModel{
 			for(SoftWare sw:softWares){
 				if( sw.getIndex()==i ){
 					rowValue.add(" ["+i+"]       "+sw.getName());
-					
 				}
 			}
 		}

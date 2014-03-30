@@ -190,7 +190,12 @@ public class XMLData {
 					new Color(sbg[0],sbg[1],sbg[2]),
 					new Font(f.split(",")[0], Integer.parseInt(f.split(",")[1]),  Integer.parseInt(f.split(",")[2])),
 					Integer.parseInt(root.element("rowHeight").getTextTrim()),
-					Integer.parseInt(root.element("rowMargin").getTextTrim())
+					Integer.parseInt(root.element("rowMargin").getTextTrim()),
+					Integer.parseInt(root.element("softWare_Width").getTextTrim()),
+					Integer.parseInt(root.element("softWare_Height").getTextTrim()),
+					Integer.parseInt(root.element("softWare_HeightOffset").getTextTrim()),
+					Integer.parseInt(root.element("screenX").getTextTrim()),
+					Integer.parseInt(root.element("screenY").getTextTrim())
 					);
 			
 		} catch (DocumentException e) {
@@ -217,6 +222,17 @@ public class XMLData {
 		root.addElement("rowHeight").setText(c.getRowHeight()+"");
 		//行间距
 		root.addElement("rowMargin").setText(c.getRowMargin()+"");
+		//界面宽
+		root.addElement("softWare_Width").setText(c.getSoftWare_Width()+"");
+		//界面高
+		root.addElement("softWare_Height").setText(c.getSoftWare_Height()+"");
+		//界面偏移值
+		root.addElement("softWare_HeightOffset").setText(c.getSoftWare_HeightOffset()+"");
+		//软件X坐标
+		root.addElement("screenX").setText(c.getScreenX()+"");
+		//软件Y坐标
+		root.addElement("screenY").setText(c.getScreenY()+"");
+		
 		flush(doc,configXML);
 		System.out.println("设置配置文件成功！");
 	}

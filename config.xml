@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config><foreGround>41,36,33</foreGround><backGround>250,250,250</backGround><sForeGround>250,250,250</sForeGround><sBackGround>50,205,50</sBackGround><font>楷体,1,18</font><rowHeight>50</rowHeight><rowMargin>10</rowMargin></config>
+<config><foreGround>41,36,33</foreGround><backGround>250,250,250</backGround><sForeGround>250,250,250</sForeGround><sBackGround>50,205,50</sBackGround><font>楷体,1,17</font><rowHeight>50</rowHeight><rowMargin>10</rowMargin><softWare_Width>300</softWare_Width><softWare_Height>720</softWare_Height><softWare_HeightOffset>31</softWare_HeightOffset><screenX>500</screenX><screenY>100</screenY></config>

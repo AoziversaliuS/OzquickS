@@ -1,11 +1,7 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Desktop;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -23,30 +19,31 @@ public class OzFrame extends JFrame{
 	public static OTM otm;
 	public static JTable ozTable;
 	public static JScrollPane jsp;
+	
 	public static Config config;
 	
-	public static final int WIDTH = 300;
-	public static final int HEIGHT = 700;
-	public static final int OFFSET_HEIGHT = 35;
 	
-	public static final int screenX = 500;
-	public static final int screenY = 100;
+
 	
     private void init(){
-    	this.setSize(WIDTH, HEIGHT);
+    	this.setSize(config.getSoftWare_Width(), config.getSoftWare_Height());
     	this.setTitle("OzquickS");
     	this.setResizable(true);
     	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    	this.setLocation(screenX,screenY);
+    	this.setLocation(config.getScreenX(),config.getScreenY());
     }
 
 	public OzFrame(Config config){
 		
 		OzFrame.config = config;
-		this.init();//窗口初始化
+		this.init();//OzFrame窗口初始化
     	this.tableInit();//表格初始化
     	this.scrollPaneInit();//滑动条加载table
-    	this.add(jsp);//添加组件
+    	
+    	this.setLayout(new BorderLayout()); //设置布局
+    	
+    	this.add(jsp, BorderLayout.CENTER);//添加组件
+    	this.add(jsp, BorderLayout.NORTH);
     	this.setResizable(false);
     	this.setVisible(true);
 	}
@@ -105,7 +102,7 @@ public class OzFrame extends JFrame{
     	
 //    	ozTable.setPreferredScrollableViewportSize(new Dimension(WIDTH, HEIGHT));
     	if(otm.getRowValue().size()<= OTM.MAX_ROW_ON_SCREEN){
-        	ozTable.setPreferredSize(new Dimension(WIDTH, HEIGHT-OFFSET_HEIGHT));
+        	ozTable.setPreferredSize(new Dimension(config.getSoftWare_Width(), config.getSoftWare_Height()-config.getSoftWare_HeightOffset()));
     	}
     }
     private void scrollPaneInit(){
