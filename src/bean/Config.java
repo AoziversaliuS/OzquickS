@@ -12,11 +12,48 @@ public class Config {
 	private Font  font;
 	private int rowHeight = 50;
 	private int rowMargin = 10;
+	private int softWare_Width = 300;
+	private int softWare_Height = 700;
+	private int softWare_HeightOffset = 40;
 	
 	
 	
-	
-	
+	public int getSoftWare_Width() {
+		return softWare_Width;
+	}
+
+
+
+	public void setSoftWare_Width(int softWare_Width) {
+		this.softWare_Width = softWare_Width;
+	}
+
+
+
+	public int getSoftWare_Height() {
+		return softWare_Height;
+	}
+
+
+
+	public void setSoftWare_Height(int softWare_Height) {
+		this.softWare_Height = softWare_Height;
+	}
+
+
+
+	public int getSoftWare_HeightOffset() {
+		return softWare_HeightOffset;
+	}
+
+
+
+	public void setSoftWare_HeightOffset(int softWare_HeightOffset) {
+		this.softWare_HeightOffset = softWare_HeightOffset;
+	}
+
+
+
 	public Config(Color fg, Color bg, Color sfg, Color sbg, Font font,
 			int rowHeight, int rowMargin) {
 		super();

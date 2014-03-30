@@ -39,6 +39,38 @@ public class OzFrame extends JFrame{
     	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     	this.setLocation(screenX,screenY);
     }
+
+	public OzFrame(Config config){
+		
+		OzFrame.config = config;
+		this.init();//窗口初始化
+    	this.tableInit();//表格初始化
+    	this.scrollPaneInit();//滑动条加载table
+    	this.add(jsp);//添加组件
+    	this.setResizable(false);
+    	this.setVisible(true);
+	}
+	public static void setColor(Config c){
+		MouseRenderer.c = c;
+	   	ozTable.setBackground(config.getBg());
+	   	ozTable.updateUI();
+	   	ozTable.repaint();
+	}
+	
+	public static void main(String[] args) {
+		
+//		Config c = new Config(Color.black,Color.ORANGE,new Color(50,205,50), Color.white, new Font("楷体", Font.BOLD, 17));
+		Config c = XMLData.getConfig();
+		OzFrame z= new OzFrame(c);
+//		c.setBg(Color.black);
+//		z.setColor(c);
+//		try {
+//			Desktop.getDesktop().open(new File("E:/腾讯QQ.lnk"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	}
+	
     private void tableInit(){
     	
     	otm = new OTM();
@@ -80,35 +112,5 @@ public class OzFrame extends JFrame{
         jsp = new JScrollPane(ozTable);
     }
 	
-	public OzFrame(Config config){
-		
-		OzFrame.config = config;
-		this.init();//窗口初始化
-    	this.tableInit();//表格初始化
-    	this.scrollPaneInit();//滑动条加载table
-    	this.add(jsp);//添加组件
-    	this.setResizable(false);
-    	this.setVisible(true);
-	}
-	public static void setColor(Config c){
-		MouseRenderer.c = c;
-	   	ozTable.setBackground(config.getBg());
-	   	ozTable.updateUI();
-	   	ozTable.repaint();
-	}
-	
-	public static void main(String[] args) {
-		
-//		Config c = new Config(Color.black,Color.ORANGE,new Color(50,205,50), Color.white, new Font("楷体", Font.BOLD, 17));
-		Config c = XMLData.getConfig();
-		OzFrame z= new OzFrame(c);
-//		c.setBg(Color.black);
-//		z.setColor(c);
-//		try {
-//			Desktop.getDesktop().open(new File("E:/腾讯QQ.lnk"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-	}
 
 }
