@@ -3,11 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -15,6 +12,7 @@ import util.XMLData;
 
 import bean.Config;
 
+import logic.EditView;
 import logic.MouseRenderer;
 
 public class OzFrame extends JFrame{
@@ -26,10 +24,8 @@ public class OzFrame extends JFrame{
 	
 	public static Config config;
 	
-	//SOURTH  南部组件
-	public static JTabbedPane jTabbedPane;
-	public static JPanel editSoftWarePanel;
-	public static JPanel configPanel;
+	//SOUTH 南部组件
+	public static EditView editView;
 	
 
 	
@@ -47,13 +43,13 @@ public class OzFrame extends JFrame{
 		this.init();//OzFrame窗口初始化
     	this.tableInit();//表格初始化
     	this.scrollPaneInit();//滑动条加载table
-    	this.tabbedPaneInit();
-    	
     	this.setLayout(new BorderLayout()); //设置布局
     	
     	this.add(jScrollPane, BorderLayout.CENTER);//添加组件
-    	this.add(jTabbedPane, BorderLayout.SOUTH);
-    	jTabbedPane.setVisible(false);
+    	
+    	editView = new EditView();
+    	
+    	this.add(editView.getjTabbedPane(), BorderLayout.SOUTH);
 //    	this.add(new JButton("wawa"), BorderLayout.SOUTH);//添加组件
     	this.setResizable(false);
     	this.setVisible(true);
@@ -77,18 +73,6 @@ public class OzFrame extends JFrame{
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-	}
-	
-	
-	private void tabbedPaneInit(){
-		this.jTabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		this.editSoftWarePanel = new JPanel();
-		this.configPanel = new JPanel();
-		editSoftWarePanel.add(new JButton("软件"));
-		configPanel.add(new JButton("config"));
-		
-		jTabbedPane.addTab("软件编辑", editSoftWarePanel);
-		jTabbedPane.addTab("界面配置", configPanel);
 	}
 	
 	

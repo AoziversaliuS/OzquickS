@@ -17,17 +17,7 @@ public class OTM extends AbstractTableModel{
 	public static final int MAX_ROW_ON_SCREEN = 13;//屏幕上能显示的最大行数
 	
 	public OTM(){
-		rowValue = new ArrayList<String>();
-		ArrayList<SoftWare> softWares = XMLData.getSoftWares();
-		
-		rowValue.add(" ["+0+"]       设置");
-		for(int i=1; i<=softWares.size(); i++){
-			for(SoftWare sw:softWares){
-				if( sw.getIndex()==i ){
-					rowValue.add(" ["+i+"]       "+sw.getName());
-				}
-			}
-		}
+		updateRowValue();
 	}
 	
 	
@@ -59,6 +49,21 @@ public class OTM extends AbstractTableModel{
 
 	public void setRowValue(ArrayList<String> rowValue) {
 		OTM.rowValue = rowValue;
+	}
+	
+	
+	public void updateRowValue(){
+		rowValue = new ArrayList<String>();
+		ArrayList<SoftWare> softWares = XMLData.getSoftWares();
+		
+		rowValue.add(" ["+0+"]       设置");
+		for(int i=1; i<=softWares.size(); i++){
+			for(SoftWare sw:softWares){
+				if( sw.getIndex()==i ){
+					rowValue.add(" ["+i+"]       "+sw.getName());
+				}
+			}
+		}
 	}
 
 

@@ -44,17 +44,13 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 			this.ignoreSelect();
 			
 			if(focusRow==0){
-				System.out.println("½øÈë  isVisible="+OzFrame.jTabbedPane.isVisible());
-				if(OzFrame.jTabbedPane.isVisible()==false){
-					OzFrame.jTabbedPane.setVisible(true);
-				}
-				else{
-					OzFrame.jTabbedPane.setVisible(false);
-				}
+				OzFrame.editView.setVisible();
 			}
 			else{
 				SoftWare sw = XMLData.getSoftWare(focusRow);
-				openFile(sw);
+				if(sw!=null){
+					openFile(sw);
+				}
 			}
 			OzFrame.ozTable.repaint();
 
