@@ -52,6 +52,8 @@ public class OzFrame extends JFrame{
     	this.setLayout(new BorderLayout()); //设置布局
     	
     	this.add(jScrollPane, BorderLayout.CENTER);//添加组件
+    	this.add(jTabbedPane, BorderLayout.SOUTH);
+    	jTabbedPane.setVisible(false);
 //    	this.add(new JButton("wawa"), BorderLayout.SOUTH);//添加组件
     	this.setResizable(false);
     	this.setVisible(true);
@@ -84,6 +86,9 @@ public class OzFrame extends JFrame{
 		this.configPanel = new JPanel();
 		editSoftWarePanel.add(new JButton("软件"));
 		configPanel.add(new JButton("config"));
+		
+		jTabbedPane.addTab("软件编辑", editSoftWarePanel);
+		jTabbedPane.addTab("界面配置", configPanel);
 	}
 	
 	
