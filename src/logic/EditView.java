@@ -1,5 +1,6 @@
 package logic;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -27,18 +28,27 @@ public class EditView implements ActionListener{
 	
 	private  JLabel     l1 =  new JLabel("            软  件  名  :");
 	private  JLabel     l2 =  new JLabel("                  路  径  :");
-	private  JLabel     l3 =  new JLabel("                  嵌 入 点  :");
+	private  JLabel     l3 =  new JLabel("             嵌  入 点  :");
 	private  JTextField insertNum    = new JTextField();
 	private  JTextField swName = new JTextField();
 	private  JTextField swPath = new JTextField();
-	private  JButton     addButton = new JButton("添加");
-	private  JButton     insertButton = new JButton("嵌入");
+	private  JButton     addButton = new JButton("添 加");
+	private  JButton     insertButton = new JButton("嵌 入");
 	
-	private  JLabel     l4 =  new JLabel("                  软件目录  :");
+	private  JLabel     l4 =  new JLabel("       软 件 目 录  :");
 	private  JTextField deleteNum   = new JTextField();
-	private  JButton     deleteButton = new JButton("删除");
+	private  JLabel     l5 =  new JLabel("                 删 除  :");
+	private  JButton     deleteButton = new JButton("确定");
+	private JLabel     l6 = new JLabel("                  信 息 :");
 	
-	private  JLabel     tips =  new JLabel();
+	private  JLabel     tips =  new JLabel("           OzquickS");
+	
+	private Color bg= new Color(41,36,33);
+	private Color fg= new Color(240,255,255);
+	
+	private Color red = Color.red;
+	private Color green = new Color(127,255,0);
+	
 	public EditView(){
 		
 		this.jTabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -58,8 +68,7 @@ public class EditView implements ActionListener{
 		
 		
 		
-		softWarePanel.add(new JLabel());
-		softWarePanel.add(tips);
+
 		//添加软件
 		softWarePanel.add(l1);
 		softWarePanel.add(swName);
@@ -73,24 +82,44 @@ public class EditView implements ActionListener{
 		//删除软件
 		softWarePanel.add(l4);
 		softWarePanel.add(deleteNum);
-		softWarePanel.add(new JLabel());
+		softWarePanel.add(l5);
 		softWarePanel.add(deleteButton);
 		
 
 		
 		addListener();
 		
+		softWarePanel.add(l6);
+		softWarePanel.add(tips);
+		
 		
 	}
 	
 	
 	private void colorSet(){
-		jTabbedPane.setBackground(OzFrame.config.getBg());
-		softWarePanel.setBackground(OzFrame.config.getBg());
-		configPanel.setBackground(OzFrame.config.getBg());
-		addButton.setBackground(OzFrame.config.getBg());
-		insertButton.setBackground(OzFrame.config.getBg());
-		deleteButton.setBackground(OzFrame.config.getBg());
+
+		
+		jTabbedPane.setBackground(bg);
+		softWarePanel.setBackground(bg);
+		configPanel.setBackground(bg);
+		addButton.setBackground(bg);
+		insertButton.setBackground(bg);
+		deleteButton.setBackground(bg);
+		
+		jTabbedPane.setForeground(fg);
+		softWarePanel.setForeground(fg);
+		configPanel.setForeground(fg);
+		addButton.setForeground(fg);
+		insertButton.setForeground(fg);
+		deleteButton.setForeground(fg);
+		
+		l1.setForeground(fg);
+		l2.setForeground(fg);
+		l3.setForeground(fg);
+		l4.setForeground(fg);
+		l5.setForeground(fg);
+		l6.setForeground(fg);
+		tips.setForeground(green);
 	}
 	
 	private void addListener(){
@@ -111,6 +140,12 @@ public class EditView implements ActionListener{
 	
 	public void setVisible(){
 		if(jTabbedPane.isVisible()==false){
+			swName.setText("");
+			swPath.setText("");
+			insertNum.setText("");
+			deleteNum.setText("");
+			tips.setForeground(green);
+			tips.setText("           OzquickS");
 			jTabbedPane.setVisible(true);
 		}
 		else{
@@ -137,23 +172,78 @@ public class EditView implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if( e.getSource()==addButton ){
 			System.out.println("添加软件");
-			XMLData.addSoftWare(new SoftWare(swName.getText().trim(),swPath.getText().trim()) );
-			OzFrame.otm.updateRowValue();
-			OzFrame.ozTable.updateUI();
+			if(!swName.getText().trim().equals("") && !swPath.getText().trim().equals("")){
+				XMLData.addSoftWare(new SoftWare(swName.getText().trim(),swPath.getText().trim()) );
+				OzFrame.otm.updateRowValue();
+				OzFrame.ozTable.updateUI();
+				swName.setText("");
+				swPath.setText("");
+				insertNum.setText("");
+				tips.setForeground(green);
+				tips.setText("                  完 成");
+			}
+			else{
+				tips.setForeground(red);
+				tips.setText("软件名或路径不能为空！");
+			}
+
 		}
 		else if( e.getSource()==insertButton ){
 			System.out.println("插入软件");
-			int index = Integer.parseInt(insertNum.getText().trim());
-			XMLData.insertSoftWare(new SoftWare(index, swName.getText().trim(), swPath.getText().trim()));
-			OzFrame.otm.updateRowValue();
-			OzFrame.ozTable.updateUI();
+			if(!swName.getText().trim().equals("") && !swPath.getText().trim().equals("") && !insertNum.getText().trim().equals("")){
+//				
+				try{
+					int index = Integer.parseInt(insertNum.getText().trim());
+					if(index>XMLData.getSoftWares().size() || index<=0 ){
+						tips.setForeground(red);
+						tips.setText("没有此index！");
+					}
+					else{
+						XMLData.insertSoftWare(new SoftWare(index, swName.getText().trim(), swPath.getText().trim()));
+						OzFrame.otm.updateRowValue();
+						OzFrame.ozTable.updateUI();
+						swName.setText("");
+						swPath.setText("");
+						insertNum.setText("");
+						tips.setForeground(green);
+						tips.setText("                  完 成");
+					}
+				}catch (NumberFormatException e1) {
+					tips.setForeground(red);
+					tips.setText("请输入数字！");
+				}
+				
+
+			}else{
+				tips.setForeground(red);
+				tips.setText("输入信息不全！");
+			}
+			
+			
 		}
 		else if( e.getSource()==deleteButton ){
 			System.out.println("删除软件");
-			int index = Integer.parseInt(deleteNum.getText().trim());
-			XMLData.deleteSoftWare(index);
-			OzFrame.otm.updateRowValue();
-			OzFrame.ozTable.updateUI();
+			try{
+				int index = Integer.parseInt(deleteNum.getText().trim());
+				if(index>XMLData.getSoftWares().size() || index<=0){
+					tips.setForeground(red);
+					tips.setText("没有此index！");
+				}
+				else{
+					XMLData.deleteSoftWare(index);
+					OzFrame.otm.updateRowValue();
+					OzFrame.ozTable.updateUI();
+					deleteNum.setText("");
+					tips.setForeground(green);
+					tips.setText("                  完 成");
+				}
+
+			}catch (NumberFormatException e2) {
+				tips.setForeground(red);
+				tips.setText("请输入数字！");
+			}
+			
+			
 		}
 	}
 	
