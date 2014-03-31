@@ -1,6 +1,7 @@
 package logic;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -316,16 +317,35 @@ public class EditView implements ActionListener{
 			String rsString = rowSet.getText().trim().split("I")[1];
 			String lString = location.getText().trim().split("I")[1];
 			String hoString = heightOffset.getText().trim().split("I")[1];
-			System.out.println(rsString);
-			System.out.println(lString);
-			System.out.println(hoString);
+			
 			int fg[] =  getColorRGB(fgString);
 			int bg[] =  getColorRGB(bgString);
 			int sfg[] = getColorRGB(sfgString);
 			int sbg[] = getColorRGB(sbgString);
 			
+			c.setFg(new Color(fg[0],fg[1],fg[2]));
+			c.setBg(new Color(bg[0],bg[1],bg[2]));
+			c.setSfg(new Color(sfg[0],sfg[1],sfg[2]));
+			c.setSbg(new Color(sbg[0],sbg[1],sbg[2]));
+			c.setFont(new Font(
+					fontString.split(",")[0], 
+					Integer.parseInt(fontString.split(",")[1]),
+					Integer.parseInt(fontString.split(",")[2]))
+			);
+
+			c.setSoftWare_Width(Integer.parseInt(whString.split(",")[0]));
+			c.setSoftWare_Height(Integer.parseInt(whString.split(",")[1]));
+
+			c.setRowHeight(Integer.parseInt(rsString.split(",")[0]));
+			c.setRowMargin(Integer.parseInt(rsString.split(",")[1]));
 			
+			c.setScreenX(Integer.parseInt(lString.split(",")[0]));
+			c.setScreenY(Integer.parseInt(lString.split(",")[1]));
 			
+			c.setSoftWare_HeightOffset(Integer.parseInt(hoString));
+			
+			XMLData.setConfig(c);
+			OzFrame.setConfig(c);
 		}
 	}
 	

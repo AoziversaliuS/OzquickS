@@ -54,11 +54,20 @@ public class OzFrame extends JFrame{
     	this.setResizable(false);
     	this.setVisible(true);
 	}
-	public static void setColor(Config c){
+	public static void setConfig(Config c){
 		MouseRenderer.c = c;
+		config = c;
+		//设置字体
+    	ozTable.setFont(config.getFont());
 	   	ozTable.setBackground(config.getBg());
+    	//设置行高和间距
+    	ozTable.setRowHeight(config.getRowHeight());
+    	ozTable.setRowMargin(config.getRowMargin());
+    	//设置行的动态渲染
+    	ozTable.setBackground(config.getBg());
 	   	ozTable.updateUI();
 	   	ozTable.repaint();
+
 	}
 	
 	public static void main(String[] args) {
