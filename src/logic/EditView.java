@@ -25,7 +25,7 @@ public class EditView implements ActionListener{
 	private  JPanel softWarePanel;
 	private  JPanel configPanel;
 	
-	
+	//软件编辑模块
 	private  JLabel     l1 =  new JLabel("            软  件  名  :");
 	private  JLabel     l2 =  new JLabel("                  路  径  :");
 	private  JLabel     l3 =  new JLabel("             嵌  入 点  :");
@@ -42,6 +42,19 @@ public class EditView implements ActionListener{
 	private JLabel     l6 = new JLabel("                  信 息 :");
 	
 	private  JLabel     tips =  new JLabel("           OzquickS");
+	
+	
+	//配置编辑模块
+	private  JTextField fbColor   = new JTextField();
+	private  JTextField sfbColor   = new JTextField();
+	private  JTextField fontSet   = new JTextField();
+	private  JTextField swWH   = new JTextField();
+	private  JTextField rowSet   = new JTextField();
+	private  JTextField location   = new JTextField();
+	private  JTextField heightOffset   = new JTextField();
+	private  JButton    editButton = new JButton("修改");
+	
+	
 	
 	private Color bg= new Color(41,36,33);
 	private Color fg= new Color(240,255,255);
@@ -63,11 +76,29 @@ public class EditView implements ActionListener{
 		jTabbedPane.addTab("界面配置", configPanel);
 		jTabbedPane.setVisible(false);
 		
-		softWarePanel.setLayout(new GridLayout(7, 2));
+		swEdit();
+		configEdit();
+		
+		addListener();
+		
 
 		
 		
+	}
+	private void  configEdit(){
+		configPanel.setLayout(new GridLayout(8,1));
+		configPanel.add(fbColor);
+		configPanel.add(sfbColor);
+		configPanel.add(fontSet);
+		configPanel.add(swWH);
+		configPanel.add(rowSet);
+		configPanel.add(location);
+		configPanel.add(heightOffset);
+		configPanel.add(editButton);
 		
+	}
+	private void  swEdit(){
+		softWarePanel.setLayout(new GridLayout(7, 2));
 
 		//添加软件
 		softWarePanel.add(l1);
@@ -85,14 +116,8 @@ public class EditView implements ActionListener{
 		softWarePanel.add(l5);
 		softWarePanel.add(deleteButton);
 		
-
-		
-		addListener();
-		
 		softWarePanel.add(l6);
 		softWarePanel.add(tips);
-		
-		
 	}
 	
 	
@@ -120,6 +145,12 @@ public class EditView implements ActionListener{
 		l5.setForeground(fg);
 		l6.setForeground(fg);
 		tips.setForeground(green);
+		
+		
+		
+		editButton.setBackground(bg);
+		editButton.setForeground(fg);
+		
 	}
 	
 	private void addListener(){
@@ -140,17 +171,32 @@ public class EditView implements ActionListener{
 	
 	public void setVisible(){
 		if(jTabbedPane.isVisible()==false){
-			swName.setText("");
-			swPath.setText("");
-			insertNum.setText("");
-			deleteNum.setText("");
-			tips.setForeground(green);
-			tips.setText("           OzquickS");
+			editReset();
+			makeConfig();
 			jTabbedPane.setVisible(true);
 		}
 		else{
 			jTabbedPane.setVisible(false);
 		}
+	}
+//	private  JTextField fbColor   = new JTextField();
+//	private  JTextField sfbColor   = new JTextField();
+//	private  JTextField fontSet   = new JTextField();
+//	private  JTextField swWH   = new JTextField();
+//	private  JTextField rowSet   = new JTextField();
+//	private  JTextField location   = new JTextField();
+//	private  JTextField heightOffset   = new JTextField();
+	public void makeConfig(){
+		Config c = XMLData.getConfig();
+		fbColor.setText("字体颜色=["+c.getFg_RGB()+"]      背景颜色=["+c.getBg_RGB()+"]");
+	}
+	public void editReset(){
+		swName.setText("");
+		swPath.setText("");
+		insertNum.setText("");
+		deleteNum.setText("");
+		tips.setForeground(green);
+		tips.setText("           OzquickS");
 	}
 	
 	

@@ -56,11 +56,11 @@ public class OTM extends AbstractTableModel{
 		rowValue = new ArrayList<String>();
 		ArrayList<SoftWare> softWares = XMLData.getSoftWares();
 		
-		rowValue.add(" ["+0+"]       …Ë÷√");
+		rowValue.add("["+0+"]    …Ë÷√");
 		for(int i=1; i<=softWares.size(); i++){
 			for(SoftWare sw:softWares){
 				if( sw.getIndex()==i ){
-					rowValue.add(" ["+i+"]       "+sw.getName());
+					rowValue.add("["+i+"]    "+sw.getName());
 				}
 			}
 		}
