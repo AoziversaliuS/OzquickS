@@ -72,16 +72,8 @@ public class OzFrame extends JFrame{
 	
 	public static void main(String[] args) {
 		
-//		Config c = new Config(Color.black,Color.ORANGE,new Color(50,205,50), Color.white, new Font("¿¬Ìå", Font.BOLD, 17));
 		Config c = XMLData.getConfig();
-		OzFrame z= new OzFrame(c);
-//		c.setBg(Color.black);
-//		z.setColor(c);
-//		try {
-//			Desktop.getDesktop().open(new File("E:/ÌÚÑ¶QQ.lnk"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		new OzFrame(c);
 	}
 	
 	
