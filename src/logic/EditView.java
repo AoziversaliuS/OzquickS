@@ -157,6 +157,7 @@ public class EditView implements ActionListener{
 		addButton.addActionListener(this);
 		insertButton.addActionListener(this);
 		deleteButton.addActionListener(this);
+		editButton.addActionListener(this);
 	}
 	
 	
@@ -179,18 +180,23 @@ public class EditView implements ActionListener{
 			jTabbedPane.setVisible(false);
 		}
 	}
-//	private  JTextField fbColor   = new JTextField();
-//	private  JTextField sfbColor   = new JTextField();
-//	private  JTextField fontSet   = new JTextField();
-//	private  JTextField swWH   = new JTextField();
-//	private  JTextField rowSet   = new JTextField();
-//	private  JTextField location   = new JTextField();
-//	private  JTextField heightOffset   = new JTextField();
-	public void makeConfig(){
+
+	private void makeConfig(){
 		Config c = XMLData.getConfig();
-		fbColor.setText("字体颜色=["+c.getFg_RGB()+"]      背景颜色=["+c.getBg_RGB()+"]");
+		fbColor.setText("     FG=I"+c.getFg_RGB()+"I                  BG=I"+c.getBg_RGB()+"I");
+		sfbColor.setText("  SFG=I"+c.getSfg_RGB()+"I         SBG=I"+c.getSbg_RGB()+"I");
+		fontSet.setText("                           Font=I"+c.getFontString()+"I");
+		swWH.setText("                           软件宽高=I"+c.getSoftWare_Width()+","+c.getSoftWare_Height()+"I");
+		rowSet.setText("                           行高,行间距=I"+c.getRowHeight()+","+c.getRowMargin()+"I");
+		location.setText("                           屏幕坐标=I"+c.getScreenX()+","+c.getScreenY()+"I");
+		heightOffset.setText("                           高度偏差值=I"+c.getSoftWare_HeightOffset()+"I");
 	}
-	public void editReset(){
+	private static int[] getColorRGB(String RGB){
+		String RGBs[] = RGB.split(",");
+		int rgb[] = {Integer.parseInt(RGBs[0]),Integer.parseInt(RGBs[1]),Integer.parseInt(RGBs[2])};
+		return rgb;
+	}
+	private void editReset(){
 		swName.setText("");
 		swPath.setText("");
 		insertNum.setText("");
@@ -288,6 +294,36 @@ public class EditView implements ActionListener{
 				tips.setForeground(red);
 				tips.setText("请输入数字！");
 			}
+			
+			
+		}
+//		private  JTextField fbColor   = new JTextField();
+//		private  JTextField sfbColor   = new JTextField();
+//		private  JTextField fontSet   = new JTextField();
+//		private  JTextField swWH   = new JTextField();
+//		private  JTextField rowSet   = new JTextField();
+//		private  JTextField location   = new JTextField();
+//		private  JTextField heightOffset   = new JTextField();
+		else if( e.getSource()==editButton ){
+			Config c = new Config();
+			System.out.println("修改数据");
+			String fgString = fbColor.getText().trim().split("I")[1];
+			String bgString = fbColor.getText().trim().split("I")[3];
+			String sfgString = sfbColor.getText().trim().split("I")[1];
+			String sbgString = sfbColor.getText().trim().split("I")[3];
+			String fontString = fontSet.getText().trim().split("I")[1];
+			String whString = swWH.getText().trim().split("I")[1];
+			String rsString = rowSet.getText().trim().split("I")[1];
+			String lString = location.getText().trim().split("I")[1];
+			String hoString = heightOffset.getText().trim().split("I")[1];
+			System.out.println(rsString);
+			System.out.println(lString);
+			System.out.println(hoString);
+			int fg[] =  getColorRGB(fgString);
+			int bg[] =  getColorRGB(bgString);
+			int sfg[] = getColorRGB(sfgString);
+			int sbg[] = getColorRGB(sbgString);
+			
 			
 			
 		}
