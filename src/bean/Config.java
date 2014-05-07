@@ -15,11 +15,39 @@ public class Config {
 	private int softWare_Width = 300;
 	private int softWare_Height = 720;
 	private int softWare_HeightOffset = 31;
-	public  int screenX = 500;
-	public  int screenY = 100;
+	private  int screenX = 500;
+	private  int screenY = 100;
+	
+	private Color gfColor;
+	private Color gbColor;
 	
 	
 	
+	
+	public Color getGfColor() {
+		return gfColor;
+	}
+
+
+
+	public void setGfColor(Color gfColor) {
+		this.gfColor = gfColor;
+	}
+
+
+
+	public Color getGbColor() {
+		return gbColor;
+	}
+
+
+
+	public void setGbColor(Color gbColor) {
+		this.gbColor = gbColor;
+	}
+
+
+
 	public int getSoftWare_Width() {
 		return softWare_Width;
 	}
@@ -62,10 +90,14 @@ public class Config {
 
 
 
+
+
+
+
 	public Config(Color fg, Color bg, Color sfg, Color sbg, Font font,
 			int rowHeight, int rowMargin, int softWare_Width,
 			int softWare_Height, int softWare_HeightOffset, int screenX,
-			int screenY) {
+			int screenY, Color gfColor, Color gbColor) {
 		super();
 		this.fg = fg;
 		this.bg = bg;
@@ -79,6 +111,8 @@ public class Config {
 		this.softWare_HeightOffset = softWare_HeightOffset;
 		this.screenX = screenX;
 		this.screenY = screenY;
+		this.gfColor = gfColor;
+		this.gbColor = gbColor;
 	}
 
 
@@ -180,20 +214,25 @@ public class Config {
 		this.font = font;
 	}
 	public String getFg_RGB(){
-		String rgb = ""+this.fg.getRed()+","+this.fg.getGreen()+","+this.fg.getBlue()+"";
-		return rgb;
+		return colorString(fg);
 	}
 	public String getBg_RGB(){
-		String rgb = ""+this.bg.getRed()+","+this.bg.getGreen()+","+this.bg.getBlue()+"";
-		return rgb;
+		return colorString(bg);
 	}
 	public String getSfg_RGB(){
-		String rgb = ""+this.sfg.getRed()+","+this.sfg.getGreen()+","+this.sfg.getBlue()+"";
-		return rgb;
+		return colorString(sfg);
 	}
 	public String getSbg_RGB(){
-		String rgb = ""+this.sbg.getRed()+","+this.sbg.getGreen()+","+this.sbg.getBlue()+"";
-		return rgb;
+		return colorString(sbg);
+	}
+	public String getGf_RGB(){
+		return colorString(gfColor);
+	}
+	public String getGb_RGB(){
+		return colorString(gbColor);
+	}
+	private String colorString(Color color){
+		return ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+"";
 	}
 	public String getFontString(){
 //		new Font(name, style, size)

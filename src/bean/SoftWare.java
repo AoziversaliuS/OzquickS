@@ -5,12 +5,18 @@ public class SoftWare {
 	private int index;
 	private String name;
 	private String path;
+	private boolean open = false;
 	
 	
 	
 	
 	
-	
+	public boolean isOpen() {
+		return open;
+	}
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
 	public int getIndex() {
 		return index;
 	}

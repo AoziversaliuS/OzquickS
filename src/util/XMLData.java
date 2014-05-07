@@ -182,20 +182,24 @@ public class XMLData {
 			int bg[]  = getColorRGB(root.element("backGround").getTextTrim());
 			int sfg[] = getColorRGB(root.element("sForeGround").getTextTrim());
 			int sbg[] = getColorRGB(root.element("sBackGround").getTextTrim());
+			int gf[]  = getColorRGB(root.element("gfColor").getTextTrim());
+			int gb[]  = getColorRGB(root.element("gbColor").getTextTrim());
 			String f = root.element("font").getTextTrim();
 			c = new Config(
-					new Color(fg[0],fg[1],fg[2]),
-					new Color(bg[0],bg[1],bg[2]),
-					new Color(sfg[0],sfg[1],sfg[2]),
-					new Color(sbg[0],sbg[1],sbg[2]),
+					mC(fg),
+					mC(bg),
+					mC(sfg),
+					mC(sbg),
 					new Font(f.split(",")[0], Integer.parseInt(f.split(",")[1]),  Integer.parseInt(f.split(",")[2])),
-					Integer.parseInt(root.element("rowHeight").getTextTrim()),
-					Integer.parseInt(root.element("rowMargin").getTextTrim()),
-					Integer.parseInt(root.element("softWare_Width").getTextTrim()),
-					Integer.parseInt(root.element("softWare_Height").getTextTrim()),
-					Integer.parseInt(root.element("softWare_HeightOffset").getTextTrim()),
-					Integer.parseInt(root.element("screenX").getTextTrim()),
-					Integer.parseInt(root.element("screenY").getTextTrim())
+					mI(root.element("rowHeight").getText()),
+					mI(root.element("rowMargin").getText()),
+					mI(root.element("softWare_Width").getText()),
+					mI(root.element("softWare_Height").getText()),
+					mI(root.element("softWare_HeightOffset").getText()),
+					mI(root.element("screenX").getText()),
+					mI(root.element("screenY").getText()),
+					mC(gf),
+					mC(gb)
 					);
 			
 		} catch (DocumentException e) {
@@ -204,6 +208,12 @@ public class XMLData {
 		}
 		
 		return c;
+	}
+	private static int mI(String integer){
+		return Integer.parseInt(integer.trim());
+	}
+	private static Color mC(int c[]){
+		return new Color(c[0],c[1],c[2]);
 	}
 	public static void setConfig(Config c){
 		Document doc = DocumentHelper.createDocument();
@@ -233,6 +243,10 @@ public class XMLData {
 		//软件Y坐标
 		root.addElement("screenY").setText(c.getScreenY()+"");
 		
+		root.addElement("gfColor").setText(c.getGf_RGB()+"");
+		
+		root.addElement("gbColor").setText(c.getGb_RGB()+"");
+		
 		flush(doc,configXML);
 		System.out.println("设置配置文件成功！");
 	}
@@ -245,6 +259,8 @@ public class XMLData {
 				new Color(50,205,50), 
 				new Font("楷体", Font.BOLD, 17)
 				);
+		c.setGfColor(Color.WHITE);
+		c.setGbColor(Color.BLACK);
 		setConfig(c);
 	}
 	

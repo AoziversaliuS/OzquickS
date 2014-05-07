@@ -17,6 +17,8 @@ import logic.MouseRenderer;
 
 public class OzFrame extends JFrame{
 	
+	public static final String  NAME = "SpeedSearch 2.0";
+	public static final String  SHOW = "                   A o z I";
 	//CENTER  中心组件
 	public static OTM otm;
 	public static JTable ozTable;
@@ -31,8 +33,8 @@ public class OzFrame extends JFrame{
 	
     private void init(){
     	this.setSize(config.getSoftWare_Width(), config.getSoftWare_Height());
-    	this.setTitle("OzquickS");
-    	this.setResizable(true);
+    	this.setTitle(NAME);
+    	this.setResizable(false);
     	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     	this.setLocation(config.getScreenX(),config.getScreenY());
     }
@@ -44,14 +46,12 @@ public class OzFrame extends JFrame{
     	this.tableInit();//表格初始化
     	this.scrollPaneInit();//滑动条加载table
     	this.setLayout(new BorderLayout()); //设置布局
-    	
     	this.add(jScrollPane, BorderLayout.CENTER);//添加组件
     	
     	editView = new EditView();
     	
     	this.add(editView.getjTabbedPane(), BorderLayout.SOUTH);
 //    	this.add(new JButton("wawa"), BorderLayout.SOUTH);//添加组件
-    	this.setResizable(false);
     	this.setVisible(true);
 	}
 	public static void setConfig(Config c){
@@ -110,7 +110,7 @@ public class OzFrame extends JFrame{
     	ozTable.setFont(config.getFont());
     	
 //    	ozTable.setPreferredScrollableViewportSize(new Dimension(WIDTH, HEIGHT));
-    	if(otm.getRowValue().size()<= OTM.MAX_ROW_ON_SCREEN){
+    	if(otm.edit().size()<= OTM.MAX_ROW_ON_SCREEN){
         	ozTable.setPreferredSize(new Dimension(config.getSoftWare_Width(), config.getSoftWare_Height()-config.getSoftWare_HeightOffset()));
     	}
     }

@@ -7,6 +7,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import gui.OTM;
 import gui.OzFrame;
 
 import javax.swing.JButton;
@@ -38,7 +39,7 @@ public class EditView implements ActionListener{
 	
 	private  JLabel     l4 =  new JLabel("       软 件 目 录  :");
 	private  JTextField deleteNum   = new JTextField();
-	private  JLabel     l5 =  new JLabel("                 删 除  :");
+	private  JButton     changeButton =  new JButton("移动");
 	private  JButton     deleteButton = new JButton("确定");
 	private JLabel     l6 = new JLabel("                  信 息 :");
 	
@@ -51,8 +52,8 @@ public class EditView implements ActionListener{
 	private  JTextField fontSet   = new JTextField();
 	private  JTextField swWH   = new JTextField();
 	private  JTextField rowSet   = new JTextField();
-	private  JTextField location   = new JTextField();
-	private  JTextField heightOffset   = new JTextField();
+	private  JTextField locationHeight   = new JTextField();
+	private  JTextField gColor   = new JTextField();
 	private  JButton    editButton = new JButton("修改");
 	
 	
@@ -93,8 +94,8 @@ public class EditView implements ActionListener{
 		configPanel.add(fontSet);
 		configPanel.add(swWH);
 		configPanel.add(rowSet);
-		configPanel.add(location);
-		configPanel.add(heightOffset);
+		configPanel.add(locationHeight);
+		configPanel.add(gColor);
 		configPanel.add(editButton);
 		
 	}
@@ -114,7 +115,7 @@ public class EditView implements ActionListener{
 		//删除软件
 		softWarePanel.add(l4);
 		softWarePanel.add(deleteNum);
-		softWarePanel.add(l5);
+		softWarePanel.add(changeButton);
 		softWarePanel.add(deleteButton);
 		
 		softWarePanel.add(l6);
@@ -131,6 +132,7 @@ public class EditView implements ActionListener{
 		addButton.setBackground(bg);
 		insertButton.setBackground(bg);
 		deleteButton.setBackground(bg);
+		changeButton.setBackground(bg);
 		
 		jTabbedPane.setForeground(fg);
 		softWarePanel.setForeground(fg);
@@ -138,12 +140,14 @@ public class EditView implements ActionListener{
 		addButton.setForeground(fg);
 		insertButton.setForeground(fg);
 		deleteButton.setForeground(fg);
+		changeButton.setForeground(fg);
+
 		
 		l1.setForeground(fg);
 		l2.setForeground(fg);
 		l3.setForeground(fg);
 		l4.setForeground(fg);
-		l5.setForeground(fg);
+
 		l6.setForeground(fg);
 		tips.setForeground(green);
 		
@@ -151,7 +155,7 @@ public class EditView implements ActionListener{
 		
 		editButton.setBackground(bg);
 		editButton.setForeground(fg);
-		
+
 	}
 	
 	private void addListener(){
@@ -159,6 +163,7 @@ public class EditView implements ActionListener{
 		insertButton.addActionListener(this);
 		deleteButton.addActionListener(this);
 		editButton.addActionListener(this);
+		changeButton.addActionListener(this);
 	}
 	
 	
@@ -189,8 +194,8 @@ public class EditView implements ActionListener{
 		fontSet.setText("                           Font=I"+c.getFontString()+"I");
 		swWH.setText("                           软件宽高=I"+c.getSoftWare_Width()+","+c.getSoftWare_Height()+"I");
 		rowSet.setText("                           行高,行间距=I"+c.getRowHeight()+","+c.getRowMargin()+"I");
-		location.setText("                           屏幕坐标=I"+c.getScreenX()+","+c.getScreenY()+"I");
-		heightOffset.setText("                           高度偏差值=I"+c.getSoftWare_HeightOffset()+"I");
+		locationHeight.setText("   屏幕坐标=I"+c.getScreenX()+","+c.getScreenY()+"I"+"            高度偏差值=I"+c.getSoftWare_HeightOffset()+"I");
+		gColor.setText("     GF=I"+c.getGf_RGB()+"I                  GB=I"+c.getGb_RGB()+"I");
 	}
 	private static int[] getColorRGB(String RGB){
 		String RGBs[] = RGB.split(",");
@@ -203,7 +208,7 @@ public class EditView implements ActionListener{
 		insertNum.setText("");
 		deleteNum.setText("");
 		tips.setForeground(green);
-		tips.setText("           OzquickS");
+		tips.setText(OzFrame.SHOW);
 	}
 	
 	
@@ -226,7 +231,9 @@ public class EditView implements ActionListener{
 		if( e.getSource()==addButton ){
 			System.out.println("添加软件");
 			if(!swName.getText().trim().equals("") && !swPath.getText().trim().equals("")){
-				XMLData.addSoftWare(new SoftWare(swName.getText().trim(),swPath.getText().trim()) );
+				SoftWare sw = new SoftWare(swName.getText().trim(),swPath.getText().trim());
+				ABsetting(sw);
+				XMLData.addSoftWare(sw);
 				OzFrame.otm.updateRowValue();
 				OzFrame.ozTable.updateUI();
 				swName.setText("");
@@ -252,7 +259,10 @@ public class EditView implements ActionListener{
 						tips.setText("没有此index！");
 					}
 					else{
-						XMLData.insertSoftWare(new SoftWare(index, swName.getText().trim(), swPath.getText().trim()));
+						int realIndex = OTM.getSoftWareByRow(index).getIndex();
+						SoftWare sw = new SoftWare(realIndex, swName.getText().trim(), swPath.getText().trim());
+						ABsetting(sw);
+						XMLData.insertSoftWare(sw);
 						OzFrame.otm.updateRowValue();
 						OzFrame.ozTable.updateUI();
 						swName.setText("");
@@ -283,7 +293,11 @@ public class EditView implements ActionListener{
 					tips.setText("没有此index！");
 				}
 				else{
-					XMLData.deleteSoftWare(index);
+					
+					int realIndex = OTM.getSoftWareByRow(index).getIndex();
+					
+					XMLData.deleteSoftWare(realIndex);
+					
 					OzFrame.otm.updateRowValue();
 					OzFrame.ozTable.updateUI();
 					deleteNum.setText("");
@@ -298,13 +312,6 @@ public class EditView implements ActionListener{
 			
 			
 		}
-//		private  JTextField fbColor   = new JTextField();
-//		private  JTextField sfbColor   = new JTextField();
-//		private  JTextField fontSet   = new JTextField();
-//		private  JTextField swWH   = new JTextField();
-//		private  JTextField rowSet   = new JTextField();
-//		private  JTextField location   = new JTextField();
-//		private  JTextField heightOffset   = new JTextField();
 		else if( e.getSource()==editButton ){
 			Config c = new Config();
 			System.out.println("修改数据");
@@ -315,13 +322,21 @@ public class EditView implements ActionListener{
 			String fontString = fontSet.getText().trim().split("I")[1];
 			String whString = swWH.getText().trim().split("I")[1];
 			String rsString = rowSet.getText().trim().split("I")[1];
-			String lString = location.getText().trim().split("I")[1];
-			String hoString = heightOffset.getText().trim().split("I")[1];
-			
+			String lString = locationHeight.getText().trim().split("I")[1];
+			String hoString = locationHeight.getText().trim().split("I")[3];
+			String gfString = gColor.getText().trim().split("I")[1];
+			String gbString = gColor.getText().trim().split("I")[3];
+
 			int fg[] =  getColorRGB(fgString);
 			int bg[] =  getColorRGB(bgString);
 			int sfg[] = getColorRGB(sfgString);
 			int sbg[] = getColorRGB(sbgString);
+			int gf[] = getColorRGB(gfString);
+			int gb[] = getColorRGB(gbString);
+			
+			
+			
+			
 			
 			c.setFg(new Color(fg[0],fg[1],fg[2]));
 			c.setBg(new Color(bg[0],bg[1],bg[2]));
@@ -344,8 +359,35 @@ public class EditView implements ActionListener{
 			
 			c.setSoftWare_HeightOffset(Integer.parseInt(hoString));
 			
+			c.setGfColor(new Color(gf[0],gf[1],gf[2]));
+			c.setGbColor(new Color(gb[0],gb[1],gb[2]));
+			
 			XMLData.setConfig(c);
 			OzFrame.setConfig(c);
+		}
+		else if( e.getSource()==changeButton ){
+			String[] buff = deleteNum.getText().trim().split("[+]");
+			System.out.println(deleteNum.getText().trim().split("[+]")[0]);
+			 int index1 = Integer.parseInt(buff[0]);
+			 int index2 = Integer.parseInt(buff[1]);
+			 
+			if(OTM.edit().size()>index1 && OTM.edit().size()>index2 ){
+				SoftWare sw = new SoftWare();
+				SoftWare swBuff = OTM.getSoftWareByRow(index1);
+				sw.setIndex(OTM.getSoftWareByRow(index2).getIndex());
+				sw.setName(swBuff.getName());
+				sw.setPath(swBuff.getPath());
+				XMLData.deleteSoftWare(swBuff.getIndex());
+				XMLData.insertSoftWare(sw);
+				OzFrame.otm.updateRowValue();
+				OzFrame.ozTable.updateUI();
+			}
+		}
+	}
+	
+	private void ABsetting(SoftWare sw){
+		if( sw.getPath().equals("B") ){
+			sw.setName("---------------------------");
 		}
 	}
 	

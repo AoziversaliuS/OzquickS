@@ -6,12 +6,14 @@ import gui.OTM;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -38,7 +40,8 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 	
 	
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mousePressed(MouseEvent e){ 
+
 		this.isPressing = true;
 		
 			this.ignoreSelect();
@@ -47,25 +50,33 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 				OzFrame.editView.setVisible();
 			}
 			else{
-				SoftWare sw = XMLData.getSoftWare(focusRow);
+				SoftWare sw = OTM.getSoftWareByRow(focusRow);
 				if(sw!=null){
 					openFile(sw);
 				}
 			}
 			OzFrame.ozTable.repaint();
+			resize();
 
 	}
-
+	
+	private void resize(){
+		if(OTM.edit().size()>OTM.MAX_ROW_ON_SCREEN){
+			OzFrame.ozTable.setPreferredSize(null);
+		}
+		else{
+			OzFrame.ozTable.setPreferredSize(new Dimension(c.getSoftWare_Width(), c.getSoftWare_Height()-c.getSoftWare_HeightOffset()));
+		}
+	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		
 //		this.ignoreSelect();
-		if(OzFrame.otm.getRowValue().size()>OTM.MAX_ROW_ON_SCREEN){
-			OzFrame.ozTable.setPreferredSize(null);
-		}
+		resize();
 		
 		
 		focusRow = OzFrame.ozTable.rowAtPoint(e.getPoint());
+		
 			this.ignoreSelect();
 		OzFrame.ozTable.repaint();//重画table
 	}
@@ -105,7 +116,25 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
 				row, column);
-//		System.out.println("focusRow="+focusRow+" "+"row="+row);
+//		if(row == focusRow){
+////			cell.setBackground(new Color(034, 139, 034));
+//			if(isPressing){
+//				cell.setForeground(c.getFg());
+//			}
+//			else{
+//				cell.setForeground(c.getSfg());
+//			}
+//			cell.setBackground(c.getSbg());
+//		}
+//		else if( OTM.isAB(row) ){
+//			cell.setForeground(c.getGfColor());
+//			cell.setBackground(c.getGbColor());
+//		}
+//		else{
+//			cell.setForeground(c.getFg());
+//			cell.setBackground(c.getBg());
+//		}
+		
 		if(row == focusRow){
 //			cell.setBackground(new Color(034, 139, 034));
 			if(isPressing){
@@ -114,7 +143,18 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 			else{
 				cell.setForeground(c.getSfg());
 			}
-			cell.setBackground(c.getSbg());
+			
+			if( OTM.isAB(row) ){
+				cell.setBackground(c.getGbColor());
+			}
+			else{
+				cell.setBackground(c.getSbg());
+			}
+			
+		}
+		else if( OTM.isAB(row) ){
+			cell.setForeground(c.getGfColor());
+			cell.setBackground(c.getGbColor());
 		}
 		else{
 			cell.setForeground(c.getFg());
@@ -137,19 +177,29 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 	}
 	private void openFile(SoftWare sw){
 		
-		File file = new File(sw.getPath());
+		if( sw.getPath().equals("A") ){
+			sw.setOpen(!sw.isOpen());
+			OzFrame.ozTable.updateUI();
+			OzFrame.ozTable.repaint();//重画table
+		}
+		else if(  sw.getPath().equals("B") ){
+			
+		}
+		else{
+			File file = new File(sw.getPath());
 			try {
 				if(file.exists()){
 					Desktop.getDesktop().open(file);
 				}
 				else{
 					System.out.println("文件不存在！");
-//					JOptionPane.showMessageDialog(labelFor, "文件不存在！");
+					JOptionPane.showMessageDialog(labelFor, "文件不存在！(若是文件,请确保后缀名有无漏写！)");
 				}
 			} catch (IOException e) {
 				System.out.println("打开文件失败！");
 			}
 		}
+	}
 		
 
 }
