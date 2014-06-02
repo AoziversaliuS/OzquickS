@@ -387,7 +387,7 @@ public class EditView implements ActionListener{
 	
 	private void ABsetting(SoftWare sw){
 		if( sw.getPath().equals("B") ){
-			sw.setName("---------------------------");
+			sw.setName("---------------");
 		}
 	}
 	
