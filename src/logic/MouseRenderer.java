@@ -47,7 +47,8 @@ public class MouseRenderer extends DefaultTableCellRenderer implements MouseList
 			this.ignoreSelect();
 			
 			if(focusRow==0){
-				OzFrame.editView.setVisible();
+//				OzFrame.editView.setVisible();
+				new EditView();
 			}
 			else{
 				SoftWare sw = OTM.getSoftWareByRow(focusRow);
