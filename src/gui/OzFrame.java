@@ -25,7 +25,7 @@ public class OzFrame extends JFrame{
 	public static Config config;
 	
 	//SOUTH 南部组件
-	public static EditView editView;
+//	public static EditView editView;
 	
 
 	
@@ -49,9 +49,11 @@ public class OzFrame extends JFrame{
     	//隐藏滚动条(让滚动条在窗口之外显示，所以看不到滚动条)
     	this.setLayout(null); //设置布局
     	//+12是为了让滚动条显示在屏幕外面
-    	jScrollPane.setSize(config.getSoftWare_Width()+12, config.getSoftWare_Height());
+    	jScrollPane.setLocation(0, 0);
+    	jScrollPane.setSize(config.getSoftWare_Width()+12, config.getSoftWare_Height()-25);
     	this.add(jScrollPane);//添加组件
     	
+    	//不再添加editView到
 //    	editView = new EditView();
 //    	
 //    	this.add(editView.getjTabbedPane(), BorderLayout.SOUTH);

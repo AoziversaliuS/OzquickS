@@ -26,7 +26,7 @@ import bean.SoftWare;
 
 public class EditView  extends JFrame implements ActionListener {
 	
-	public static int WIDTH=350,HEIGHT=300;
+	public static int WIDTH=325,HEIGHT=275;
 	
 	//SOURTH  南部组件
 	private  JTabbedPane jTabbedPane;
@@ -198,16 +198,6 @@ public class EditView  extends JFrame implements ActionListener {
 	
 	
 	
-	public void setVisible(){
-		if(jTabbedPane.isVisible()==false){
-			editReset();
-			makeConfig();
-			jTabbedPane.setVisible(true);
-		}
-		else{
-			jTabbedPane.setVisible(false);
-		}
-	}
 
 	private void makeConfig(){
 		Config c = XMLData.getConfig();
