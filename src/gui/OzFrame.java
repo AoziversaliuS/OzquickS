@@ -9,15 +9,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import util.XMLData;
-
 import bean.Config;
-
 import logic.EditView;
 import logic.MouseRenderer;
 
 public class OzFrame extends JFrame{
 	
-	public static final String  NAME = "Speed Mini";
+	public static final String  NAME = "Speed Mini 2";
 	public static final String  SHOW = "          A o z I";
 	//CENTER  中心组件
 	public static OTM otm;
@@ -45,12 +43,18 @@ public class OzFrame extends JFrame{
 		this.init();//OzFrame窗口初始化
     	this.tableInit();//表格初始化
     	this.scrollPaneInit();//滑动条加载table
-    	this.setLayout(new BorderLayout()); //设置布局
-    	this.add(jScrollPane, BorderLayout.CENTER);//添加组件
+//    	this.setLayout(new BorderLayout()); //设置布局
+//    	this.add(jScrollPane, BorderLayout.CENTER);//添加组件
     	
-    	editView = new EditView();
+    	//隐藏滚动条(让滚动条在窗口之外显示，所以看不到滚动条)
+    	this.setLayout(null); //设置布局
+    	//+12是为了让滚动条显示在屏幕外面
+    	jScrollPane.setSize(config.getSoftWare_Width()+12, config.getSoftWare_Height());
+    	this.add(jScrollPane);//添加组件
     	
-    	this.add(editView.getjTabbedPane(), BorderLayout.SOUTH);
+//    	editView = new EditView();
+//    	
+//    	this.add(editView.getjTabbedPane(), BorderLayout.SOUTH);
 //    	this.add(new JButton("wawa"), BorderLayout.SOUTH);//添加组件
     	this.setVisible(true);
 	}
@@ -116,6 +120,10 @@ public class OzFrame extends JFrame{
     }
     private void scrollPaneInit(){
         jScrollPane = new JScrollPane(ozTable);
+//        jScrollPane.setVisible(false);
+//        jScrollPane.setPreferredSize(new Dimension(1, 1));
+        //为保持一致性,让滚动条一直在窗口之外显示(但是由于位于窗口之外，所以看不到)隐藏滚动条的实现在OzFrame的构造方法里
+//        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
     }
 	
 

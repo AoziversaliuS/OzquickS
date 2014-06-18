@@ -1,9 +1,12 @@
 package logic;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.TextField;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,17 +14,20 @@ import gui.OTM;
 import gui.OzFrame;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import util.XMLData;
-
 import bean.Config;
 import bean.SoftWare;
 
-public class EditView implements ActionListener{
+public class EditView  extends JFrame implements ActionListener {
+	
+	public static int WIDTH=350,HEIGHT=300;
+	
 	//SOURTH  南部组件
 	private  JTabbedPane jTabbedPane;
 	private  JPanel softWarePanel;
@@ -65,9 +71,11 @@ public class EditView implements ActionListener{
 	private Color green = new Color(127,255,0);
 	
 	public EditView(){
+		System.out.println("asdasdasdsa");
+		this.init();
+		
 		
 		this.jTabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		
 		
 		this.softWarePanel = new JPanel();
 		this.configPanel = new JPanel();
@@ -76,17 +84,31 @@ public class EditView implements ActionListener{
 		
 		jTabbedPane.addTab("软件编辑", softWarePanel);
 		jTabbedPane.addTab("界面配置", configPanel);
-		jTabbedPane.setVisible(false);
+//		jTabbedPane.setVisible(false);
+		jTabbedPane.setVisible(true);
 		
 		swEdit();
 		configEdit();
 		
 		addListener();
 		
-
+		this.setLayout(new BorderLayout());
+		this.add(jTabbedPane,BorderLayout.CENTER);
+		makeConfig();
 		
+		this.setVisible(true);
 		
 	}
+	private void init(){
+		this.setSize(WIDTH, HEIGHT);
+		System.out.println("config="+OzFrame.config.getSoftWare_Width());
+    	this.setTitle("Speed Edit View");
+    	this.setResizable(false);
+//    	this.setDefaultCloseOperation(JFrame.);
+    	Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();  
+    	this.setLocation(screen.width/2-WIDTH/2,screen.height/2-HEIGHT/2);
+	}
+
 	private void  configEdit(){
 		configPanel.setLayout(new GridLayout(8,1));
 		configPanel.add(fbColor);
@@ -390,7 +412,6 @@ public class EditView implements ActionListener{
 			sw.setName("---------------");
 		}
 	}
-	
 	
 	
 	
