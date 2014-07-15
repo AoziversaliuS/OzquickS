@@ -15,7 +15,7 @@ import logic.MouseRenderer;
 
 public class OzFrame extends JFrame{
 	
-	public static final String  NAME = "Speed Mini 2";
+	public static final String  NAME = "Smini 2";
 	public static final String  SHOW = "          A o z I";
 	//CENTER  中心组件
 	public static OTM otm;
